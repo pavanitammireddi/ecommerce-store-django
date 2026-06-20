@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Commerce Store</title>
+
+    <style>
+        .navbar{
+            background: linear-gradient(to right, #141e30, #243b55);
+            color: white;
+            padding: 18px 40px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+
+           display:flex;
+           justify-content:space-between;
+           align-items:center;
+        }
+        .navbar div
+        {
+           display:flex;
+           align-items:center;
+           gap:15px;
+          flex-wrap:wrap;
+        }
+        .navbar a{
+               color: white;
+               text-decoration: none;
+               margin-left: 20px;
+               font-size: 18px;
+            }
+
+        .navbar a:hover{
+                color: cyan;
+            }
+       
+       body{
+            font-family: Arial;
+            background:#eef2f7;
+            margin:0;
+            padding:0;
+        }
+
+        h1{
+            text-align:center;
+            background:black;
+            color:white;
+            padding:20px;
+        }
+
+       .container
+       {
+              display:grid;
+              grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+              gap:30px;
+              padding:30px;
+              max-width:1200px;
+             margin:auto;
+       }
+
+        .card{
+           background:white;
+           width:280px;
+           padding:18px;
+           border-radius:15px;
+           box-shadow:0 6px 15px rgba(0,0,0,0.2);
+           transition:0.3s;
+     }
+
+       .card:hover{
+           transform:translateY(-8px);
+         }
+
+        .card img{
+            width:100%;
+            height:200px;
+            object-fit:cover;
+            border-radius:10px;
+        }
+
+        .card h2{
+            margin:10px 0;
+        }
+
+        .price{
+            color:green;
+            font-size:20px;
+            font-weight:bold;
+        }
+
+       .card button{
+            background:#111827;
+            color:white;
+            border:none;
+            padding:12px;
+            width:100%;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:16px;
+            transition:0.3s;
+        }
+
+       .card button:hover{
+            background:#2563eb;
+        }
+          .search-btn{
+               width:auto;
+               padding:8px 15px;
+               background:black;
+               color:white;
+               border:none;
+               border-radius:5px;
+               cursor:pointer;
+           }
+           .welcome-text{
+             margin-left:20px;
+             color: cyan;
+             font-weight: bold;
+           }
+           .order-count{
+              background: cyan;
+             color: black;
+             padding: 3px 8px;
+              border-radius: 50%;
+             font-size: 14px;
+             font-weight: bold;
+             margin-left: 5px;
+            }
+            .cart-count
+            {
+               background:#22c55e;
+               color:white;
+               padding:3px 8px;
+               border-radius:50%;
+               font-size:14px;
+               font-weight:bold;
+               margin-left:5px;
+}
+           .dark-btn
+           {
+              background:#111827;
+              color:white;
+              border:none;
+              padding:8px 12px;
+              border-radius:6px;
+              cursor:pointer;
+              margin-left:15px;
+            }
+
+           .dark-btn:hover
+           {
+              background:#2563eb;
+            }
+            .dark 
+            {
+               background:#121212;
+               color:white;
+            }
+
+           .dark .card{
+               background:#1f2937;
+              color:white;
+            }
+
+           .dark .navbar{
+               background:#000;
+            }
+           .dark .price
+           {
+             color:#00ff88;
+           }
+            
+            footer
+            {
+              background:#111827;
+              color:white;
+              text-align:center;
+              padding:20px;
+              margin-top:40px;
+            }
+
+            .dark footer
+            {
+              background:#000;
+            }
+    </style>
+</head>
+
+<body>
+    
+    <div class="navbar">
+
+        <h2>My E-Commerce Store</h2>
+
+       <div>
+
+              <form method="GET" action="/" style="display:inline;">
+
+             <input type="text"
+                name="search"
+                placeholder="Search products">
+
+               <button type="submit" class="search-btn">Search</button>
+
+             </form>
+
+           <a href="/">Home</a>
+
+                  {% if request.user.is_authenticated %}
+
+            <a href="/cart/">
+                  Cart
+                    <span class="cart-count">
+                            {{ cart_count }}
+                      </span>
+            </a>
+            <a href="/orders/">
+                Orders
+                   <span class="order-count">
+                      {{order_count}}
+                   </span>
+            </a>
+
+
+             <a href="/logout/">Logout</a>
+
+               <span class="welcome-text">
+                  Welcome, {{ request.user.username }}
+               </span>
+
+              {% else %}
+
+             <a href="/login/">Login</a>
+
+             <a href="/register/">Register</a>
+
+             {% endif %}
+         <a href="/admin/">Admin</a>
+         <button onclick="toggleMode()" class="dark-btn">
+             🌙 Dark Mode
+        </button>
+         
+
+        </div>
+
+    </div>
+    
+    
+    <div class="container">
+
+        {% for product in products %}
+
+        <div class="card">
+            <img src="{{ product.image }}">
+
+            <a href="/product/{{ product.id }}/">
+                   <h2>{{ product.name }}</h2>
+            </a> 
+
+            <p>{{ product.description }}</p>
+
+            <p class="price">₹ {{ product.price }}</p>
+
+            <a href="/add-to-cart/{{ product.id }}/"><button>Add To Cart</button></a>
+        </div>
+
+        {% endfor %}
+
+    </div>
+    <script>
+       function toggleMode()
+       {
+         document.body.classList.toggle("dark");
+       }
+    </script>
+
+    <footer>
+         <p>© 2026 E-Commerce Store | Developed by Pavani</p>
+    </footer>
+
+    
+
+</body>
+</html>

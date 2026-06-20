@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>My Orders</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f4f4f4;
+            padding:30px;
+        }
+
+        .box{
+            width:600px;
+            margin:auto;
+            background:white;
+            padding:20px;
+            border-radius:10px;
+        }
+
+        .order{
+            border-bottom:1px solid #ddd;
+            padding:15px 0;
+        }
+
+        h1{
+            text-align:center;
+        }
+
+        .price{
+            color:green;
+            font-size:20px;
+            font-weight:bold;
+        }
+
+        .back{
+            text-decoration:none;
+            display:inline-block;
+            margin-bottom:20px;
+            color:black;
+            font-weight:bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <a href="/" class="back">
+        ← Back To Home
+    </a>
+
+    <h1>My Orders</h1>
+
+    {% for order in orders %}
+
+    <div class="order">
+
+        <h3>Order #{{ order.id }}</h3>
+
+        <p class="price">
+            Total: ₹ {{ order.total_price }}
+        </p>
+
+    </div>
+
+    {% empty %}
+
+    <p>No orders yet</p>
+
+    {% endfor %}
+
+</div>
+
+</body>
+
+</html>

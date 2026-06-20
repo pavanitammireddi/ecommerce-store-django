@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Register</title>
+
+    <style>
+
+       body{
+           margin:0;
+           padding:0;
+           font-family:Arial, sans-serif;
+           background:linear-gradient(135deg,#141e30,#243b55);
+           height:100vh;
+           display:flex;
+           justify-content:center;
+           align-items:center;
+       }
+
+       .box{
+           width:380px;
+           background:white;
+           padding:35px;
+           border-radius:15px;
+           box-shadow:0 10px 25px rgba(0,0,0,0.3);
+           transition:0.3s;
+       }
+
+       .box:hover{
+           transform:translateY(-5px);
+       }
+
+       h1{
+           text-align:center;
+           margin-bottom:25px;
+           color:#141e30;
+       }
+
+       input{
+           width:100%;
+           padding:12px;
+           margin-top:12px;
+           border:1px solid #ccc;
+           border-radius:8px;
+           box-sizing:border-box;
+       }
+
+       input:focus{
+           outline:none;
+           border-color:#2563eb;
+       }
+
+       button{
+           width:100%;
+           padding:12px;
+           margin-top:20px;
+           background:#2563eb;
+           color:white;
+           border:none;
+           border-radius:8px;
+           cursor:pointer;
+           font-size:16px;
+       }
+
+       button:hover{
+           background:#1d4ed8;
+       }
+
+       .show-password{
+           display:flex;
+           align-items:center;
+           gap:8px;
+           margin-top:10px;
+           justify-content: flex-start;
+       }
+
+       p{
+           text-align:center;
+       }
+
+       a{
+           color:#2563eb;
+           text-decoration:none;
+           font-weight:bold;
+       }
+
+       a:hover{
+           text-decoration:underline;
+       }
+
+       @media(max-width:480px){
+           .box{
+               width:90%;
+               padding:25px;
+           }
+       }
+       .error
+       {
+         color:red;
+         text-align:center;
+       } 
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+    <h1>Create Account 🚀</h1>
+    {% for message in messages %}
+       <p class="error">
+        {{ message }}
+       </p>
+    {% endfor %}
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        <input type="text"
+               name="username"
+               placeholder="Enter Username"
+               required>
+
+        <input type="password"
+               id="password"
+               name="password"
+               placeholder="Enter Password"
+               required>
+
+        <input type="password"
+               id="confirmPassword"
+               name="confirm_password"
+               placeholder="Confirm Password"
+               required>
+
+        <div class="show-password">
+            <input type="checkbox"
+                   onclick="showPassword()"
+                   style="width:auto;">
+
+            <span>Show Password</span>
+        </div>
+
+        <button type="submit">
+            Create Account
+        </button>
+
+        <p style="margin-top:15px;">
+            Already have an account?
+            <a href="/login/">Sign In</a>
+        </p>
+
+    </form>
+
+</div>
+
+<script>
+
+function showPassword(){
+
+    let pwd = document.getElementById("password");
+    let confirmPwd = document.getElementById("confirmPassword");
+
+    if(pwd.type === "password"){
+        pwd.type = "text";
+        confirmPwd.type = "text";
+    }
+    else{
+        pwd.type = "password";
+        confirmPwd.type = "password";
+    }
+}
+
+</script>
+
+</body>
+</html>
